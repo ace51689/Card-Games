@@ -1,0 +1,83 @@
+* {
+    box-sizing: border-box;
+}
+
+#kingHeading {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#container {
+    position: relative;
+    top: 5px;
+    display: flex;
+}
+
+#currCard {
+    position: relative;
+    font-size: xx-large;
+    /* border: 2px dashed darkgray; */
+    width: 120px;
+    height: 42px;
+    justify-content: flex-start;
+}
+
+#cardsRemain {
+    font-size: x-large;
+}
+
+#drawCard {
+    position: relative;
+    height: 28px;
+    width: 50px;
+}
+
+#reset {
+    position: relative;
+    left: 10px;
+    height: 28px;
+    width: 50px;
+}
+
+#cardsRemain {
+    position: relative;
+    top: 3px;
+    left: 5px;
+    display: inline;
+}
+
+#action {
+    height: 42px;
+    width: 700px;
+    /* border: 2px dashed lightcoral; */
+    font-size: xx-large;
+}
+
+table {
+    font-size: xx-large;
+    top:5px;
+    border:1px solid black;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+}
+
+td {
+    width: 85px;
+}
+
+#ftdContain {
+    display: flex;
+}
+
+#ftdCard {
+    border: 1px solid black;
+    width: 100px;
+    height: 100px;
+}
+
+#message {
+    border: 1px solid red;
+    width: 100px;
+    height: 100px;
+}
