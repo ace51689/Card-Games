@@ -10,6 +10,8 @@ let oneGuess = document.querySelector('#oneGuess')  //Button
 let finGuess = document.querySelector('#finGuess')  //Button
 let ftdCard = document.querySelector('#ftdCard')
 let message = document.querySelector('#message')
+let firstGuessDisplay = document.querySelector('#firstGuessDisplay')
+let finalGuessDisplay = document.querySelector('#finalGuessDisplay')
 // let twos = document.querySelector('#twos')
 // let threes = document.querySelector('#threes')
 // let fours = document.querySelector('#fours')
@@ -108,6 +110,8 @@ oneGuess.addEventListener('click', function () {
     currFtdCard.push(card)
     let firstGuessValue = firstGuess.value.trim()
     let firstGuessString = firstGuessValue.toString()
+    firstGuessDisplay.innerText = ('First Guess: ' + firstGuessString)
+    finalGuessDisplay.innerText = ('Final Guess:')
     let guessArray = []
     for (let outer = 0; outer < ftdDeck.length; outer++) {
         let guessCheck = ftdDeck[outer]
@@ -139,6 +143,7 @@ finGuess.addEventListener('click', function () {
     // firstGuess.value = (' ')
     let finalGuessValue = finalGuess.value.trim()
     let finalGuessString = finalGuessValue.toString()
+    finalGuessDisplay.innerText = ('Final Guess: ' + finalGuessString)
     if (currFtdCard.toString().includes(finalGuessString)) {
         let popCard = currFtdCard.pop(0)
         ftdCard.innerHTML = popCard
