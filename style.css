@@ -3,8 +3,11 @@
 }
 
 #kingHeading {
+    display: flex;
+    width: 290px;
     margin-top: 5px;
     margin-bottom: 5px;
+    justify-content: center;
 }
 
 #container {
@@ -48,7 +51,7 @@
 
 #action {
     height: 42px;
-    width: 700px;
+    width: 550px;
     /* border: 2px dashed lightcoral; */
     font-size: xx-large;
 }
@@ -56,7 +59,7 @@
 table {
     font-size: xx-large;
     top:5px;
-    border:1px solid black;
+    /* border:1px solid black; */
     position: relative;
     margin: 0 auto;
     width: 100%;
@@ -64,20 +67,59 @@ table {
 
 td {
     width: 85px;
+    /* border-right: 1px solid black; */
 }
 
 #ftdContain {
     display: flex;
+    /* border: 1px solid black; */
 }
 
 #ftdCard {
-    border: 1px solid black;
-    width: 100px;
-    height: 100px;
+    display: flex;
+    border-right: 1px solid black;
+    width: 80px;
+    height: 45px;
+    padding-left: 10px;
+    padding-right: 5px;
+    font-size: xx-large;
+    align-items: center;
+    justify-content: center;
 }
 
 #message {
-    border: 1px solid red;
-    width: 100px;
-    height: 100px;
+    display: flex;
+    /* border: 1px solid red; */
+    width: 275px;
+    height: 45px;
+    font-size: xx-large;
+    align-items: center;
+    padding-left: 10px;
 }
+
+.resetTable {
+    position: relative;
+    top: 3px;
+}
+
+#cardDisplay {
+    padding-left: 10px;
+}
+
+#ftd {
+    display: flex;
+    justify-content: center;
+    margin: 5px 0px;
+    width: 484px;
+}
+
+/* .playerInputContainer {
+   position: relative;
+   left: 610px;
+   top: -130px;
+}
+
+#activePlayerList {
+    border: 1px solid black;
+    height: 300px;
+} */

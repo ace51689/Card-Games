@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kings 'n' Such</title>
-    <link rel="stylesheet" href="style.css"></link>
+    <link rel="stylesheet" href="style.css">
+    </link>
 </head>
 
 <body>
-    <h1 id="kingHeading">Kwarantine Kings</h1>
+    <h1 id="kingHeading">Kings</h1>
 
     <button id="drawCard">Draw</button>
 
@@ -22,53 +23,78 @@
         <div id="action"></div>
     </div>
 
-    <h1 id="ftd">Fuck(ing stay inside!!!) the Dealer</h1>
+    <!-- <div class="playerInputContainer">
+        <div class="playerInputSection">
+            <h3>Input Players</h3>
+            <input type="text" id="enterPlayer" placeholder="Enter Player Name">
+        </div>
+
+        <div class="playerInputButtons">
+            <button id="addPlayer">Add</button>
+            <button id="finalizePlayers">Finalize</button>
+            <button id="resetButton">Reset</button>
+        </div>
+        
+        <div id="playerList">
+            <ul id="activePlayerList">
+
+            </ul>
+        </div>
+    </div> -->
+
+    <h1 id="ftd">Fuck the Dealer</h1>
 
     <input type="text" id="firstGuess" placeholder="First Guess">
     <button id="oneGuess">Guess 1</button>
     <input type="text" id="finalGuess" placeholder="Final Guess">
     <button id="finGuess">Guess 2</button>
+
     <div id="guessContain">
         <div class="guessDisplay" id="firstGuessDisplay">First Guess:</div>
         <div class="guessDisplay" id="finalGuessDisplay">Final Guess:</div>
     </div>
+
     <div id="ftdContain">
         <div id="ftdCard"></div>
         <div id="message"></div>
     </div>
-    <table id="cardDisplay">
-        <tr>
-            <td>2s</td>
-            <td>3s</td>
-            <td>4s</td>
-            <td>5s</td>
-            <td>6s</td>
-            <td>7s</td>
-            <td>8s</td>
-            <td>9s</td>
-            <td>10s</td>
-            <td>Js</td>
-            <td>Qs</td>
-            <td>Ks</td>
-            <td>As</td>
-        </tr>
-        <tr>
-            <td id="twos"></td>
-            <td id="threes"></td>
-            <td id="fours"></td>
-            <td id="fives"></td>
-            <td id="sixes"></td>
-            <td id="sevens"></td>
-            <td id="eights"></td>
-            <td id="nines"></td>
-            <td id="tens"></td>
-            <td id="jacks"></td>
-            <td id="queens"></td>
-            <td id="kings"></td>
-            <td id="aces"></td>
-        </tr>
-    </table>
-    
+
+    <div class="resetTable">
+        <button id="ftdReset">Reset Game</button>
+        <table id="cardDisplay">
+            <tr id="top">
+                <td>2s</td>
+                <td>3s</td>
+                <td>4s</td>
+                <td>5s</td>
+                <td>6s</td>
+                <td>7s</td>
+                <td>8s</td>
+                <td>9s</td>
+                <td>10s</td>
+                <td>Js</td>
+                <td>Qs</td>
+                <td>Ks</td>
+                <td>As</td>
+            </tr>
+            <tr>
+                <td id="twos"></td>
+                <td id="threes"></td>
+                <td id="fours"></td>
+                <td id="fives"></td>
+                <td id="sixes"></td>
+                <td id="sevens"></td>
+                <td id="eights"></td>
+                <td id="nines"></td>
+                <td id="tens"></td>
+                <td id="jacks"></td>
+                <td id="queens"></td>
+                <td id="kings"></td>
+                <td id="aces"></td>
+            </tr>
+        </table>
+    </div>
+
     <script src="main.js"></script>
 </body>
 

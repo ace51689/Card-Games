@@ -1,9 +1,10 @@
-//Kings Declareations---------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Kings Declarations---------------------------------------------------------------------------------------------------------------------------------------------------------------
 let draw = document.querySelector('#drawCard')
 let currCard = document.querySelector('#currCard')
 let action = document.querySelector('#action')
 let cardsRemain = document.querySelector('#cardsRemain')
 let kingsReset = document.querySelector('#kingsReset')
+//FTD Declarations
 let firstGuess = document.querySelector('#firstGuess')  //Input
 let finalGuess = document.querySelector('#finalGuess')  //Input
 let oneGuess = document.querySelector('#oneGuess')  //Button
@@ -25,6 +26,7 @@ let jacks = document.querySelector('#jacks')
 let queens = document.querySelector('#queens')
 let kings = document.querySelector('#kings')
 let aces = document.querySelector('#aces')
+let ftdReset = document.querySelector('#ftdReset')
 
 //Kings---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 let deck = ['2 &hearts;', '2 &diams;', '2 &spades;', '2 &clubs;', '3 &hearts;', '3 &diams;', '3 &spades;', '3 &clubs;',
@@ -44,7 +46,7 @@ draw.addEventListener('click', function () {
     let newCard = '<li>' + card + '</li>'
     currCard.innerHTML = newCard
     cardsRemain.innerText = ((deck.length) + ' cards remaining')
-    
+
     let cardString = card.toString()
     if (cardString.includes('2')) {
         action.innerText = ('IS FOR YOU!')
@@ -115,6 +117,8 @@ queens.innerText = (queen)
 kings.innerText = (king)
 aces.innerText = (ace)
 
+//Don't let player click the first guess button if the input field is empty
+
 let currFtdCard = []
 let ftdDeck = ['2 &hearts;', '2 &diams;', '2 &spades;', '2 &clubs;', '3 &hearts;', '3 &diams;', '3 &spades;', '3 &clubs;',
     '4 &hearts;', '4 &diams;', '4 &spades;', '4 &clubs;', '5 &hearts;', '5 &diams;', '5 &spades;', '5 &clubs;', '6 &hearts;', '6 &diams;',
@@ -122,8 +126,12 @@ let ftdDeck = ['2 &hearts;', '2 &diams;', '2 &spades;', '2 &clubs;', '3 &hearts;
     '9 &hearts;', '9 &diams;', '9 &spades;', '9 &clubs;', '10 &hearts;', '10 &diams;', '10 &spades;', '10 &clubs;', 'J &hearts;',
     'J &diams;', 'J &spades;', 'J &clubs;', 'Q &hearts;', 'Q &diams;', 'Q &spades;', 'Q &clubs;', 'K &hearts;', 'K &diams;', 'K &spades;',
     'K &clubs;', 'A &hearts;', 'A &diams;', 'A &spades;', 'A &clubs;',]
+// oneGuess.disabled = true
 finGuess.disabled = true
+ftdReset.disabled = true
 oneGuess.addEventListener('click', function () {
+    let firstGuessValue = firstGuess.value.trim()
+    let firstGuessString = firstGuessValue.toString().toUpperCase()
     currFtdCard = []
     finalGuess.value = (' ')
     ftdCard.innerHTML = (' ')
@@ -133,8 +141,6 @@ oneGuess.addEventListener('click', function () {
     let cardIndex = ftdDeck.indexOf(card)
     currFtdCard.push(card)
     console.log(currFtdCard)
-    let firstGuessValue = firstGuess.value.trim()
-    let firstGuessString = firstGuessValue.toString().toUpperCase()
     console.log(firstGuessString)
     firstGuessDisplay.innerText = ('First Guess: ' + firstGuessString)
     finalGuessDisplay.innerText = ('Final Guess:')
@@ -286,7 +292,7 @@ finGuess.addEventListener('click', function () {
         ftdCard.innerHTML = popCard
         message.innerText = ('You Got It!')
     } else {
-        message.innerText = ('Nope, Drink Bitch.')
+        message.innerText = ('Nope. Drink, Bitch.')
         let popCard = currFtdCard.pop(0)
         ftdCard.innerHTML = popCard
     }
