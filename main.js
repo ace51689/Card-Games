@@ -1,10 +1,19 @@
-//Kings Declarations---------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Player Input Declarations-------------------------------------------------------------------------------------------------------------------------------------------------------------
+let enterPlayer = document.querySelector('#enterPlayer') //Input
+let addPlayer = document.querySelector('#addPlayer') //Add Player Button
+let finalizePlayers = document.querySelector('#finalizePlayers') //Finalize Button
+let resetPlayers = document.querySelector('#resetPlayers') //Reset Players Button
+let activePlayerList = document.querySelector('#activePlayerList')
+//Kings Declarations--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 let draw = document.querySelector('#drawCard')
 let currCard = document.querySelector('#currCard')
 let action = document.querySelector('#action')
 let cardsRemain = document.querySelector('#cardsRemain')
 let kingsReset = document.querySelector('#kingsReset')
-//FTD Declarations
+let kingsOnDeck = document.querySelector('#kingsOnDeck')
+let kingsNext = document.querySelector('#kingsNext')
+let kingsCurrentPlayer = document.querySelector('#kingsCurrentPlayer')
+//FTD Declarations----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 let firstGuess = document.querySelector('#firstGuess')  //Input
 let finalGuess = document.querySelector('#finalGuess')  //Input
 let oneGuess = document.querySelector('#oneGuess')  //Button
@@ -28,6 +37,36 @@ let kings = document.querySelector('#kings')
 let aces = document.querySelector('#aces')
 let ftdReset = document.querySelector('#ftdReset')
 
+//Enter Players------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+let currentPlayers = []
+addPlayer.addEventListener('click', function () {
+    let enterPlayerValue = enterPlayer.value.trim()
+    let enterPlayerString = enterPlayerValue.toString()
+    let newPlayer = '<li> ' + enterPlayerString + ' </li>'
+    activePlayerList.innerHTML += newPlayer
+    currentPlayers.push(enterPlayerString)
+    enterPlayer.value = ('')
+
+})
+let randomPlayers = []
+finalizePlayers.addEventListener('click', function () {
+    while (currentPlayers.length != 0) {
+        let playerIndex = (currentPlayers.length)
+        let randomizePlayers = Math.floor(Math.random() * playerIndex)
+        let pushPlayer = currentPlayers[randomizePlayers]
+        let x = currentPlayers.indexOf(pushPlayer)
+        randomPlayers.push(pushPlayer)
+        currentPlayers.splice(x, 1)
+    }
+    // console.log(randomPlayers + ' is the randomPlayers array')
+    // console.log(randomPlayers[0])
+    // console.log(randomPlayers[1])
+    if (randomPlayers.length > 1) {
+        kingsNext.innerText = ('Up Next: ' + randomPlayers[0].toString())
+        kingsOnDeck.innerText = ('On Deck: ' + randomPlayers[1].toString())
+    }
+})
+
 //Kings---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 let deck = ['2 &hearts;', '2 &diams;', '2 &spades;', '2 &clubs;', '3 &hearts;', '3 &diams;', '3 &spades;', '3 &clubs;',
     '4 &hearts;', '4 &diams;', '4 &spades;', '4 &clubs;', '5 &hearts;', '5 &diams;', '5 &spades;', '5 &clubs;', '6 &hearts;', '6 &diams;',
@@ -40,10 +79,22 @@ cardsRemain.innerText = ((deck.length) + ' cards remaining')
 
 draw.addEventListener('click', function () {
 
+    if (deck.length < 52) {
+        let removedPlayer = randomPlayers.shift()
+        randomPlayers.push(removedPlayer)
+        kingsCurrentPlayer.innerText = ('- ' + randomPlayers[0] + ' -')
+        kingsNext.innerText = ('Up Next: ' + randomPlayers[1])
+        kingsOnDeck.innerText = ('On Deck: ' + randomPlayers[2])
+    }
     let totIndex = (deck.length)
     let pullCard = Math.floor(Math.random() * totIndex)
     let card = deck.splice(pullCard, 1)
     let newCard = '<li>' + card + '</li>'
+    console.log(deck.length)
+    console.log(randomPlayers)
+    kingsCurrentPlayer.innerText = ('- ' + randomPlayers[0] + ' -')
+    kingsNext.innerText = ('Up Next: ' + randomPlayers[1])
+    kingsOnDeck.innerText = ('On Deck: ' + randomPlayers[2])
     currCard.innerHTML = newCard
     cardsRemain.innerText = ((deck.length) + ' cards remaining')
 
@@ -78,6 +129,14 @@ draw.addEventListener('click', function () {
 })
 
 kingsReset.addEventListener('click', function () {
+    if (deck.length < 52) {
+        let removedPlayer = randomPlayers.shift()
+        randomPlayers.push(removedPlayer)
+        kingsNext.innerText = ('Up Next: ' + randomPlayers[0])
+        kingsOnDeck.innerText = ('On Deck: ' + randomPlayers[1])
+    }
+    console.log(randomPlayers)
+
     deck = ['2 &hearts;', '2 &diams;', '2 &spades;', '2 &clubs;', '3 &hearts;', '3 &diams;', '3 &spades;', '3 &clubs;',
         '4 &hearts;', '4 &diams;', '4 &spades;', '4 &clubs;', '5 &hearts;', '5 &diams;', '5 &spades;', '5 &clubs;', '6 &hearts;', '6 &diams;',
         '6 &spades;', '6 &clubs;', '7 &hearts;', '7 &diams;', '7 &spades;', '7 &clubs;', '8 &hearts;', '8 &diams;', '8 &spades;', '8 &clubs;',
@@ -87,6 +146,9 @@ kingsReset.addEventListener('click', function () {
     currCard.innerText = ('')
     action.innerText = ('')
     cardsRemain.innerText = ((deck.length) + ' cards remaining')
+    kingsOnDeck.innerText = ('On Deck: ' + randomPlayers[1])
+    kingsNext.innerText = ('Up Next: ' + randomPlayers[0])
+    kingsCurrentPlayer.innerText = ('')
 })
 
 //Fuck The Dealer-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -118,6 +180,8 @@ kings.innerText = (king)
 aces.innerText = (ace)
 
 //Don't let player click the first guess button if the input field is empty
+//Display a "You've completed a game" and "click reset to play again" message when ftdDeck === 0 
+//Add functionallity to the reset button
 
 let currFtdCard = []
 let ftdDeck = ['2 &hearts;', '2 &diams;', '2 &spades;', '2 &clubs;', '3 &hearts;', '3 &diams;', '3 &spades;', '3 &clubs;',
@@ -140,8 +204,6 @@ oneGuess.addEventListener('click', function () {
     let card = ftdDeck[randomIndex]
     let cardIndex = ftdDeck.indexOf(card)
     currFtdCard.push(card)
-    console.log(currFtdCard)
-    console.log(firstGuessString)
     firstGuessDisplay.innerText = ('First Guess: ' + firstGuessString)
     finalGuessDisplay.innerText = ('Final Guess:')
     let guessArray = []
@@ -225,8 +287,6 @@ oneGuess.addEventListener('click', function () {
         oneGuess.disabled = true
         finGuess.disabled = false
     }
-    console.log(ftdDeck.length + ' is how many cards are left')
-    console.log(currFtdCard)
 })
 
 finGuess.addEventListener('click', function () {
