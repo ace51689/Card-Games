@@ -1,7 +1,8 @@
 //Player Input Declarations-------------------------------------------------------------------------------------------------------------------------------------------------------------
 let enterPlayer = document.querySelector('#enterPlayer') //Input
 let addPlayer = document.querySelector('#addPlayer') //Add Player Button
-let finalizePlayers = document.querySelector('#finalizePlayers') //Finalize Button
+let finalizePlayers = document.querySelector('#finalizePlayers')
+let randomizePlayers = document.querySelector('#randomizePlayers') //Finalize Button
 let resetPlayers = document.querySelector('#resetPlayers') //Reset Players Button
 let activePlayerList = document.querySelector('#activePlayerList')
 //Kings Declarations--------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -49,21 +50,27 @@ addPlayer.addEventListener('click', function () {
     activePlayerList.innerHTML += newPlayer
     currentPlayers.push(enterPlayerString)
     enterPlayer.value = ('')
-
 })
-let randomPlayers = []
+
 finalizePlayers.addEventListener('click', function () {
+    if (currentPlayers.length > 1) {
+        kingsNext.innerText = ('Up Next: ' + currentPlayers[0].toString())
+        kingsOnDeck.innerText = ('On Deck: ' + currentPlayers[1].toString())
+        currentDealer.innerText = ('Dealer: ' + currentPlayers[0].toString())
+        ftdOnDeck.innerText = ('On Deck: ' + currentPlayers[1].toString())
+    }
+})
+
+let randomPlayers = []
+randomizePlayers.addEventListener('click', function () {
     while (currentPlayers.length != 0) {
         let playerIndex = (currentPlayers.length)
-        let randomizePlayers = Math.floor(Math.random() * playerIndex)
-        let pushPlayer = currentPlayers[randomizePlayers]
+        let randomize = Math.floor(Math.random() * playerIndex)
+        let pushPlayer = currentPlayers[randomize]
         let x = currentPlayers.indexOf(pushPlayer)
         randomPlayers.push(pushPlayer)
         currentPlayers.splice(x, 1)
     }
-    // console.log(randomPlayers + ' is the randomPlayers array')
-    // console.log(randomPlayers[0])
-    // console.log(randomPlayers[1])
     if (randomPlayers.length > 1) {
         kingsNext.innerText = ('Up Next: ' + randomPlayers[0].toString())
         kingsOnDeck.innerText = ('On Deck: ' + randomPlayers[1].toString())
@@ -71,7 +78,16 @@ finalizePlayers.addEventListener('click', function () {
         ftdOnDeck.innerText = ('On Deck: ' + randomPlayers[1].toString())
     }
 })
-console.log(randomPlayers.length)
+resetPlayers.addEventListener('click', function () {
+    currentPlayers = []
+    randomPlayers = []
+    activePlayerList.innerHTML = (' ')
+    kingsOnDeck.innerText = ('On Deck:')
+    kingsNext.innerText = ('Up Next:')
+    currentDealer.innerText = ('Dealer:')
+    ftdOnDeck.innerText = ('On Deck:')
+})
+//Add a button to finalize current order.
 //Kings---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 let deck = ['2 &hearts;', '2 &diams;', '2 &spades;', '2 &clubs;', '3 &hearts;', '3 &diams;', '3 &spades;', '3 &clubs;',
     '4 &hearts;', '4 &diams;', '4 &spades;', '4 &clubs;', '5 &hearts;', '5 &diams;', '5 &spades;', '5 &clubs;', '6 &hearts;', '6 &diams;',
@@ -81,14 +97,22 @@ let deck = ['2 &hearts;', '2 &diams;', '2 &spades;', '2 &clubs;', '3 &hearts;', 
     'K &clubs;', 'A &hearts;', 'A &diams;', 'A &spades;', 'A &clubs;',]
 
 cardsRemain.innerText = ((deck.length) + ' cards remaining')
-
+//Work on Kings draw and reset buttons being functional with both finalized player list and random player list------------------------
 draw.addEventListener('click', function () {
     if (deck.length < 52) {
-        let removedPlayer = randomPlayers.shift()
-        randomPlayers.push(removedPlayer)
-        kingsCurrentPlayer.innerText = ('- ' + randomPlayers[0] + ' -')
-        kingsNext.innerText = ('Up Next: ' + randomPlayers[1])
-        kingsOnDeck.innerText = ('On Deck: ' + randomPlayers[2])
+        if (randomPlayers.length > 1) {
+            let removedPlayer = randomPlayers.shift()
+            randomPlayers.push(removedPlayer)
+            kingsCurrentPlayer.innerText = ('- ' + randomPlayers[0] + ' -')
+            kingsNext.innerText = ('Up Next: ' + randomPlayers[1])
+            kingsOnDeck.innerText = ('On Deck: ' + randomPlayers[2])
+        } if (currentPlayers.length > 1) {
+            let removedPlayer = currentPlayers.shift()
+            currentPlayers.push(removedPlayer)
+            kingsCurrentPlayer.innerText = ('- ' + currentPlayers[0] + ' -')
+            kingsNext.innerText = ('Up Next: ' + currentPlayers[1])
+            kingsOnDeck.innerText = ('On Deck: ' + currentPlayers[2])
+        }
     }
     let totIndex = (deck.length)
     let pullCard = Math.floor(Math.random() * totIndex)
@@ -96,15 +120,19 @@ draw.addEventListener('click', function () {
     let newCard = '<li>' + card + '</li>'
     console.log(deck.length)
     console.log(randomPlayers)
-    if (randomPlayers.length < 2) {
+    if (randomPlayers.length < 2 || currentPlayers.length < 2) {
         console.log('This is Running')
         kingsOnDeck.innerText = ('On Deck:')
         kingsNext.innerText = ('Up Next:')
         kingsCurrentPlayer.innerText = (' ')
-    } else if (randomPlayers.length > 2) {
+    } if (randomPlayers.length > 2) {
         kingsCurrentPlayer.innerText = ('- ' + randomPlayers[0] + ' -')
         kingsNext.innerText = ('Up Next: ' + randomPlayers[1])
         kingsOnDeck.innerText = ('On Deck: ' + randomPlayers[2])
+    } if (currentPlayers.length > 2) {
+        kingsCurrentPlayer.innerText = ('- ' + currentPlayers[0] + ' -')
+        kingsNext.innerText = ('Up Next: ' + currentPlayers[1])
+        kingsOnDeck.innerText = ('On Deck: ' + currentPlayers[2])
     }
     currCard.innerHTML = newCard
     cardsRemain.innerText = ((deck.length) + ' cards remaining')
@@ -141,10 +169,17 @@ draw.addEventListener('click', function () {
 
 kingsReset.addEventListener('click', function () {
     if (deck.length < 52) {
-        let removedPlayer = randomPlayers.shift()
-        randomPlayers.push(removedPlayer)
-        kingsNext.innerText = ('Up Next: ' + randomPlayers[0])
-        kingsOnDeck.innerText = ('On Deck: ' + randomPlayers[1])
+        if (randomPlayers.length >= 1) {
+            let randomRemoved = randomPlayers.shift()
+            randomPlayers.push(randomRemoved)
+            kingsNext.innerText = ('Up Next: ' + randomPlayers[0])
+            kingsOnDeck.innerText = ('On Deck: ' + randomPlayers[1])
+        } if (currentPlayers.length >= 1) {
+            let currentRemoved = currentPlayers.shift()
+            currentPlayers.push(currentRemoved)
+            kingsNext.innerText = ('Up Next: ' + currentPlayers[0])
+            kingsOnDeck.innerText = ('On Deck: ' + currentPlayers[1])
+        }
     }
     console.log(randomPlayers)
 
@@ -162,6 +197,13 @@ kingsReset.addEventListener('click', function () {
         kingsNext.innerText = ('Up Next: ' + randomPlayers[0])
         kingsCurrentPlayer.innerText = ('')
     } if (randomPlayers.length < 2) {
+        kingsNext.innerText = ('Up Next: ')
+        kingsOnDeck.innerText = ('On Deck: ')
+    } if (currentPlayers.length > 2) {
+        kingsOnDeck.innerText = ('On Deck: ' + currentPlayers[1])
+        kingsNext.innerText = ('Up Next: ' + currentPlayers[0])
+        kingsCurrentPlayer.innerText = ('')
+    } if (currentPlayers.length < 2) {
         kingsNext.innerText = ('Up Next: ')
         kingsOnDeck.innerText = ('On Deck: ')
     }
@@ -397,13 +439,25 @@ finGuess.addEventListener('click', function () {
         ftdCard.innerHTML = popCard
         stumpedCounter += 1
         stumped.innerText = ('Stumped: ' + stumpedCounter)
+        if (ftdDeck.length < 52) {
+            ftdReset.disabled = false
+        }
         if (stumpedCounter === 3) {
-            let removedPlayer = randomPlayers.shift()
-            randomPlayers.push(removedPlayer)
-            currentDealer.innerText = ('Dealer: ' + randomPlayers[0])
-            ftdOnDeck.innerText = ('On Deck: ' + randomPlayers[1])
-            stumpedCounter = 0
-            stumped.innerText = ('Stumped: ' + stumpedCounter)
+            if (randomPlayers.length >= 2) {
+                let removedPlayer = randomPlayers.shift()
+                randomPlayers.push(removedPlayer)
+                currentDealer.innerText = ('Dealer: ' + randomPlayers[0])
+                ftdOnDeck.innerText = ('On Deck: ' + randomPlayers[1])
+                stumpedCounter = 0
+                stumped.innerText = ('Stumped: ' + stumpedCounter)
+            } if (currentPlayers.length >= 2) {
+                let removedPlayer = currentPlayers.shift()
+                currentPlayers.push(removedPlayer)
+                currentDealer.innerText = ('Dealer: ' + currentPlayers[0])
+                ftdOnDeck.innerText = ('On Deck: ' + currentPlayers[1])
+                stumpedCounter = 0
+                stumped.innerText = ('Stumped: ' + stumpedCounter)
+            }
         }
     }
 })
@@ -424,10 +478,6 @@ ftdReset.addEventListener('click', function () {
     finalGuessDisplay.innerText = ('Final Guess:')
     stumpedCounter = 0
     stumped.innerText = ('Stumped: ' + stumpedCounter)
-    let removedPlayer = randomPlayers.shift()
-    randomPlayers.push(removedPlayer)
-    currentDealer.innerText = ('Dealer: ' + randomPlayers[0])
-    ftdOnDeck.innerText = ('On Deck: ' + randomPlayers[1])
     two = 4
     three = 4
     four = 4
@@ -454,4 +504,18 @@ ftdReset.addEventListener('click', function () {
     queens.innerText = (queen)
     kings.innerText = (king)
     aces.innerText = (ace)
+    if (randomPlayers.length < 2 || currentPlayers.length < 2) {
+        currentDealer.innerText = ('Dealer:')
+        ftdOnDeck.innerText = ('On Deck:')
+    } if (randomPlayers.length >= 2) {
+        let removedPlayer = randomPlayers.shift()
+        randomPlayers.push(removedPlayer)
+        currentDealer.innerText = ('Dealer: ' + randomPlayers[0])
+        ftdOnDeck.innerText = ('On Deck: ' + randomPlayers[1])
+    } if (currentPlayers.length >= 2) {
+        let removedPlayer = currentPlayers.shift()
+        currentPlayers.push(removedPlayer)
+        currentDealer.innerText = ('Dealer: ' + currentPlayers[0])
+        ftdOnDeck.innerText = ('On Deck: ' + currentPlayers[1])
+    }
 })
